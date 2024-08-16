@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app/features" />
+            <option value="$PROJECT_DIR$/app/features/movies" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
