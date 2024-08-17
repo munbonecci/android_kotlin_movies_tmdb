@@ -52,3 +52,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 secrets = {  id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin"}
 hilt-android-plugin = {id = "com.google.dagger.hilt.android",  version.ref = "hiltAndroid"}
+android-library = { id = "com.android.library", version.ref = "agp" }
