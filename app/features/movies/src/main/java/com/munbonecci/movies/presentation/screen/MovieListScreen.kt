@@ -1,5 +1,6 @@
 package com.munbonecci.movies.presentation.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +20,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,7 +48,8 @@ import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
 fun MovieListScreen(
     viewModel: MoviesViewModel = viewModel(),
     isMostPopular: Boolean = true,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    onOptionPressed: (Movie) -> Unit
 ) {
 
     if (isMostPopular) {
@@ -84,7 +86,7 @@ fun MovieListScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = if (showGrid) Icons.Default.Menu else Icons.Default.List,
+                        imageVector = if (showGrid) Icons.Default.Menu else Icons.AutoMirrored.Filled.List,
                         contentDescription = stringResource(id = R.string.grid_list_button),
                         modifier = Modifier.size(24.dp)
                     )
@@ -96,21 +98,31 @@ fun MovieListScreen(
             }
         }
 
-        ShowGridOrListScreen(showGrid, movies)
+        ShowGridOrListScreen(showGrid, movies, onOptionPressed = {
+            onOptionPressed(it)
+        } )
     }
 }
 
 @Composable
-private fun ShowGridOrListScreen(showGrid: Boolean, movies: List<Movie>) {
+private fun ShowGridOrListScreen(
+    showGrid: Boolean,
+    movies: List<Movie>,
+    onOptionPressed: (Movie) -> Unit
+) {
     if (showGrid) {
-        LazyStaggeredGridSnippet(items = movies)
+        LazyStaggeredGridSnippet(items = movies, onOptionPressed = {
+            onOptionPressed(it)
+        })
     } else {
-        ListItem(items = movies)
+        ListItem(items = movies, onOptionPressed = {
+            onOptionPressed(it)
+        })
     }
 }
 
 @Composable
-fun LazyStaggeredGridSnippet(items: List<Movie>) {
+fun LazyStaggeredGridSnippet(items: List<Movie>, onOptionPressed: (Movie) -> Unit) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Adaptive(200.dp),
         verticalItemSpacing = 4.dp,
@@ -124,6 +136,9 @@ fun LazyStaggeredGridSnippet(items: List<Movie>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        .clickable {
+                            onOptionPressed(movie)
+                        }
                 )
             }
         },
@@ -132,20 +147,23 @@ fun LazyStaggeredGridSnippet(items: List<Movie>) {
 }
 
 @Composable
-fun ListItem(items: List<Movie>) {
+fun ListItem(items: List<Movie>, onOptionPressed: (Movie) -> Unit) {
     LazyColumn {
         items(items) { item ->
-            ContainerForListCard(item)
+            ContainerForListCard(item, onOptionPressed)
         }
     }
 }
 
 @Composable
-fun ContainerForListCard(movie: Movie) {
+fun ContainerForListCard(movie: Movie, onOptionPressed: (Movie) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(12.dp)
+            .clickable {
+                onOptionPressed(movie)
+            },
         elevation = 4.dp
     ) {
         Row(

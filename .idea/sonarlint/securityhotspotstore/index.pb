@@ -62,3 +62,5 @@ m
 aapp/features/movies/src/main/java/com/munbonecci/movies/presentation/viewmodel/MoviesViewModel.kt,9\b\9b7b63254dd44cc963c95338f95587643a5ee172
 ‘
 aapp/features/movies/src/main/java/com/munbonecci/movies/data/repositories/MoviesRepositoryImpl.kt,7\e\7edb3192653806e8477c1953466c2307e025574b
+‘
+aapp/features/movies/src/main/java/com/munbonecci/movies/presentation/screen/MovieDetailsScreen.kt,3\8\380cf527c4ff06a8a52fc0c30b24d81f9092e88c
