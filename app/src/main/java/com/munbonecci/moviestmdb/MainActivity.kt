@@ -43,7 +43,7 @@ fun NavigationMainScreen() {
             BottomNavigationBar(navController = navController)
                     },
         content = { paddingValues ->
-            NavigationGraph(navController = navController)
+            NavigationGraph(navController = navController, paddingValues)
         }
     )
 }

@@ -3,14 +3,12 @@ package com.munbonecci.navigation.navigation
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.munbonecci.navigation.R
 
 
 @Composable
@@ -22,8 +20,8 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationItem.Settings
     )
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.colorPrimary),
-        contentColor = Color.White
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.background
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -36,8 +34,8 @@ fun BottomNavigationBar(navController: NavController) {
                     )
                 },
                 label = { Text(text = item.title) },
-                selectedContentColor = colorResource(id = R.color.navIconSelected),
-                unselectedContentColor = colorResource(id = R.color.navIconUnselected),
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.secondary,
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {

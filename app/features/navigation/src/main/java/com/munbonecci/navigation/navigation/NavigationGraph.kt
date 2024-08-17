@@ -1,5 +1,6 @@
 package com.munbonecci.navigation.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,15 +11,15 @@ import com.munbonecci.movies.presentation.screen.MovieListScreen
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValues) {
     val viewModel: MoviesViewModel = viewModel()
     NavHost(navController, startDestination = NavigationItem.Popular.route) {
 
         composable(NavigationItem.Popular.route) {
-            MovieListScreen(viewModel)
+            MovieListScreen(viewModel,true, paddingValues)
         }
         composable(NavigationItem.NowPlaying.route) {
-            MovieListScreen(viewModel, false)
+            MovieListScreen(viewModel, false, paddingValues)
         }
         composable(NavigationItem.Favorites.route) {
             MovieScreen()
