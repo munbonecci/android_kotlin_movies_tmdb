@@ -6,3 +6,9 @@ plugins {
     kotlin("kapt") version "1.8.10"
     alias(libs.plugins.hilt.android.plugin) apply false
 }
+
+buildscript {
+    dependencies {
+        classpath(libs.secrets.gradle.plugin)
+    }
+}

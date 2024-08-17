@@ -32,17 +32,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
     packaging {
         resources {
@@ -52,6 +53,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":app:features:movies"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -70,10 +73,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     //retrofit
     implementation (libs.retrofit)
-    implementation (libs.converter.moshi)
-    //moshi
-    implementation (libs.moshi.kotlin)
-    implementation (libs.moshi.adapters)
+    implementation (libs.converter.gson)
+    //okhttp
+    implementation (libs.okhttp)
+    //Gson
+    implementation (libs.gson)
     // Dagger Hilt
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
