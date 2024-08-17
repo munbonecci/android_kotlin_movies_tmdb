@@ -78,4 +78,7 @@ dependencies {
     implementation (libs.coil.kt.coil.compose)
     //Navigation
     implementation (libs.androidx.navigation.compose)
+    //Room
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
 }
