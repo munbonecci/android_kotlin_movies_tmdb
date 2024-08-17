@@ -1,6 +1,9 @@
 plugins {
-    alias(libs.plugins.android.library)
+    id("com.android.library")
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.secrets)
+    id("kotlin-kapt")
+    alias(libs.plugins.hilt.android.plugin)
 }
 
 android {
@@ -13,7 +16,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,6 +39,9 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -43,9 +55,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.material)
-    implementation(libs.androidx.material3)
-    implementation(project(":app"))
     implementation(project(":app:features:movies"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -54,6 +63,8 @@ dependencies {
     implementation (libs.androidx.navigation.compose)
     implementation (libs.androidx.material)
     implementation (libs.androidx.hilt.navigation.compose)
-
+// Dagger Hilt
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
 
 }

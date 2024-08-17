@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +39,7 @@ fun MovieDetailsScreen(id: String) {
                     .padding(16.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                Text(text = movie.title ?: "", style = MaterialTheme.typography.titleLarge)
+                Text(text = movie.title ?: "", style = MaterialTheme.typography.h5)
                 Text(text = "Géneros: ${movie.genreIds.joinToString(", ")}")
                 Text(text = "Sinopsis: ${movie.overview}")
                 Text(text = "Popularidad: ${movie.popularity}")

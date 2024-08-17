@@ -13,10 +13,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material.Button
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -105,7 +104,7 @@ fun ListItem(items: List<Movie>) {
 fun MyCard(movie: Movie) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(12.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = 4.dp
     ) {
         Row(
             modifier = Modifier.padding(2.dp),
