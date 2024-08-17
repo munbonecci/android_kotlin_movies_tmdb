@@ -23,3 +23,4 @@ rootProject.name = "Movies TMDB"
 include(":app")
 include(":app:features")
 include(":app:features:movies")
+include(":app:features:navigation")

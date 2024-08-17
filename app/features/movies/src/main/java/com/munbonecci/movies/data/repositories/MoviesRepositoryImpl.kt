@@ -1,11 +1,14 @@
 package com.munbonecci.movies.data.repositories
 
+import android.annotation.SuppressLint
 import com.munbonecci.movies.data.api.MovieApi
 import com.munbonecci.movies.data.models.MoviesRequest
 import com.munbonecci.movies.data.models.MoviesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class MoviesRepositoryImpl(private val movieService: MovieApi) : MoviesRepository {
     override suspend fun getMostPopularMovies(body: MoviesRequest): MoviesRepositoryState {
@@ -25,11 +28,24 @@ class MoviesRepositoryImpl(private val movieService: MovieApi) : MoviesRepositor
                 apiKey = body.apiKey,
                 language = body.language,
                 page = body.page,
-                minDate = body.minDate,
-                maxDate = body.maxDate
+                minDate = getYesterdayAndTodayDate().first,
+                maxDate = getYesterdayAndTodayDate().second
             )
             getMoviesRepositoryState(response)
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getYesterdayAndTodayDate(): Pair<String, String> {
+        val calendar = Calendar.getInstance()
+        val today = calendar.time
+
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        val yesterday = calendar.time
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+
+        return Pair(formatter.format(yesterday), formatter.format(today))
     }
 
     private fun getMoviesRepositoryState(response: Response<MoviesResponse>): MoviesRepositoryState {

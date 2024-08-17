@@ -21,17 +21,14 @@ class MoviesViewModel @Inject constructor(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
 ) : ViewModel() {
 
-    private val _uiStateForGetMostPopularMovies = MutableStateFlow<MoviesUiState>(MoviesUiState.Loading)
-    val uiStateForGetMostPopularMovies: StateFlow<MoviesUiState> = _uiStateForGetMostPopularMovies.asStateFlow()
-
-    private val _uiStateForNowPlayingMovies = MutableStateFlow<MoviesUiState>(MoviesUiState.Loading)
-    val uiStateForNowPlayingMovies: StateFlow<MoviesUiState> = _uiStateForNowPlayingMovies.asStateFlow()
+    private val _uiStateForMovies = MutableStateFlow<MoviesUiState>(MoviesUiState.Loading)
+    val uiStateForMovies: StateFlow<MoviesUiState> = _uiStateForMovies.asStateFlow()
 
     fun getMostPopularMovies(body: MoviesRequest) {
         viewModelScope.launch {
             val response = getMostPopularMoviesUseCase(body)
             val stateForGetMostPopularMovies = getMoviesUIState(response)
-            _uiStateForGetMostPopularMovies.update { stateForGetMostPopularMovies }
+            _uiStateForMovies.update { stateForGetMostPopularMovies }
         }
     }
 
@@ -39,7 +36,7 @@ class MoviesViewModel @Inject constructor(
         viewModelScope.launch {
             val response = getNowPlayingMoviesUseCase(body)
             val stateForNowPlayingMovies = getMoviesUIState(response)
-            _uiStateForNowPlayingMovies.update { stateForNowPlayingMovies }
+            _uiStateForMovies.update { stateForNowPlayingMovies }
         }
     }
 

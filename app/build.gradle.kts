@@ -54,9 +54,6 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":app:features:movies"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -64,7 +61,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation (libs.androidx.material)
+    implementation(project(":app:features:navigation"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,4 +82,6 @@ dependencies {
     kapt (libs.hilt.android.compiler)
     //coil
     implementation (libs.coil.kt.coil.compose)
+    //Navigation
+    implementation (libs.androidx.navigation.compose)
 }
