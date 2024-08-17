@@ -3,4 +3,12 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.secrets) apply false
+    kotlin("kapt") version "1.8.10"
+    alias(libs.plugins.hilt.android.plugin) apply false
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.secrets.gradle.plugin)
+    }
 }
