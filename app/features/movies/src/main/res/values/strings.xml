@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">movies</string>
+    <string name="grid_list_button">Grid/List</string>
+    <string name="see_list">See List</string>
+    <string name="see_grid">See Grid</string>
 </resources>
