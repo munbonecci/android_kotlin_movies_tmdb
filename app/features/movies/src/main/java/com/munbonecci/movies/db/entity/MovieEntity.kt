@@ -2,8 +2,11 @@ package com.munbonecci.movies.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.munbonecci.movies.db.converter.GenreIdsConverter
 
 @Entity(tableName = "movies")
+@TypeConverters(GenreIdsConverter::class)
 data class MovieEntity(
     @PrimaryKey(autoGenerate = true)
     var movieId: Int,

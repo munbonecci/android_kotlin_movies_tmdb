@@ -82,3 +82,15 @@ Papp/features/movies/src/main/java/com/munbonecci/movies/db/entity/MovieEntity.k
 Rapp/features/movies/src/main/java/com/munbonecci/movies/db/MoviesDatabaseModule.kt,d\0\d03f7870ffc5c6ebc1a1b54ad8d08be219191e64
 „
 Tapp/features/movies/src/main/java/com/munbonecci/movies/db/database/MovieDatabase.kt,5\e\5ed08684688fd8b60bf8d165cddbf8fb45e84605
+ˆ
+Xapp/features/movies/src/main/java/com/munbonecci/movies/db/datasource/MovieDatasource.kt,3\4\3400a76b1bc73c46441c6e6221916b62f7550b04
+ˆ
+Xapp/features/movies/src/main/java/com/munbonecci/movies/db/datasource/MovieDataSource.kt,3\4\34b725cd689c83d124faf625631c922fc89c3650
+Œ
+\app/features/movies/src/main/java/com/munbonecci/movies/db/datasource/RoomMovieDataSource.kt,2\b\2bb920b412b9c01dc696a0a5e313a1542e410874
+Œ
+\app/features/movies/src/main/java/com/munbonecci/movies/domain/repository/MovieRepository.kt,3\e\3e4708e8fbe31fa27d06a2cae0d884e8804c7412
+Ž
+^app/features/movies/src/main/java/com/munbonecci/movies/db/datasource/MovieRepositoryModule.kt,2\a\2a0b8650e0fb88dea16107fb49533aaa93caebf9
+‰
+Yapp/features/movies/src/main/java/com/munbonecci/movies/db/converter/GenreIdsConverter.kt,0\b\0b5ac2cb8efa40898a327a0a565df34ab6bc60fd
