@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/features" />
             <option value="$PROJECT_DIR$/app/features/movies" />
+            <option value="$PROJECT_DIR$/app/features/navigation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

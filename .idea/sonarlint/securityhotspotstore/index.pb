@@ -32,3 +32,13 @@ X
 (app/features/navigation/build.gradle.kts,b\6\b6512f41168b9c5b889cfdd7de37d7d5d312e94c
 Z
 *app/features/navigation/consumer-rules.pro,b\a\ba90c54ca87f7cdc949717d275246facf4cb663a
+ë
+aapp/features/navigation/src/main/java/com/munbonecci/navigation/navigation/BottomNavigationBar.kt,3\4\343c89daa9439ab79dd1bfc87a57888af9b0f743
+
+Oapp/features/navigation/src/main/java/com/munbonecci/navigation/navigation/t.kt,9\3\935794ac985f8d0489808bc9a0ff35599b22298a
+ç
+]app/features/navigation/src/main/java/com/munbonecci/navigation/navigation/NavigationGraph.kt,4\3\43d81b43ec4bcf3eec2b473755a7c2bafa243f7a
+å
+\app/features/navigation/src/main/java/com/munbonecci/navigation/navigation/NavigationItem.kt,7\3\73bf509f6ac4e26d4bf2926a506332ddaa901d8d
+k
+;app/src/main/java/com/munbonecci/moviestmdb/MainActivity.kt,9\9\99774b4e8716347c1bc29804a7a3167d3ef9e361

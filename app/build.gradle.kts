@@ -84,4 +84,6 @@ dependencies {
     kapt (libs.hilt.android.compiler)
     //coil
     implementation (libs.coil.kt.coil.compose)
+    //Navigation
+    implementation (libs.androidx.navigation.compose)
 }
