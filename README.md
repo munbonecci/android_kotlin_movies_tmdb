@@ -29,6 +29,7 @@ including use cases and view model to obtain the data
 - [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) -For dependency injection.
 - [SecretsGradlePlugin](https://github.com/google/secrets-gradle-plugin) - For providing your secrets securely to your Android project.
 - [TheMovieDB](https://www.themoviedb.org) - Movie database Api.
+- [Room DB](https://developer.android.com/training/data-storage/room) - For save data locally.
 - Jetpack
     - [Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAiAzKqdBhAnEiwAePEjkkbfP8b_r6c57F3jtdwOjxWpBbNOXVmpSnAUu4HKCid7KtSvfiiYeRoC1wYQAvD_BwE&gclsrc=aw.ds)
         - Android’s recommended modern toolkit for building native UI.
@@ -39,6 +40,6 @@ including use cases and view model to obtain the data
 
 - Clone the repository
 - Open it in Android Studio
-- Wait until dependencies are installed
+- Wait until dependencies are installed (Change you JDK to Corretto if necessary to avoid sync problems)
 - Add your keys in local properties (apiKey="YOUR_API_KEY")
 - Run app in your emulator or physical device
