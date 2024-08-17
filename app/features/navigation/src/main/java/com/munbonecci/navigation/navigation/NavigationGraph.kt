@@ -19,7 +19,7 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
     NavHost(navController, startDestination = NavigationItem.Popular.route) {
 
         composable(NavigationItem.Popular.route) {
-            MovieListScreen(viewModel,true, paddingValues, onOptionPressed = {
+            MovieListScreen(viewModel, true, paddingValues, onOptionPressed = {
                 navController.navigate("${NavigationItem.MovieDetails.route}/${it.id}")
             })
         }
@@ -34,9 +34,11 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
         composable(NavigationItem.Settings.route) {
             MovieScreen()
         }
-        composable("${NavigationItem.MovieDetails.route}/{id}",  arguments = listOf(
-            navArgument("id") { type = NavType.IntType },
-        )) { backStackEntry ->
+        composable(
+            "${NavigationItem.MovieDetails.route}/{id}", arguments = listOf(
+                navArgument("id") { type = NavType.IntType },
+            )
+        ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getInt("id", 0)
             MovieDetailsScreen(paddingValues, viewModel, movieId)
         }
