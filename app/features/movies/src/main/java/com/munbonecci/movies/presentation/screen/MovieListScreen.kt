@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.munbonecci.movies.data.api.ApiConstants
 import com.munbonecci.movies.data.models.MoviesRequest
 import com.munbonecci.movies.domain.models.Movie
 import com.munbonecci.movies.presentation.MoviesUiState
@@ -78,7 +79,7 @@ fun LazyStaggeredGridSnippet(items: List<Movie>) {
         content = {
             items(items) { movie ->
                 AsyncImage(
-                    model = "https://image.tmdb.org/t/p/original${movie.posterPath}",
+                    model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
                     contentScale = ContentScale.Crop,
                     contentDescription = movie.title,
                     modifier = Modifier
@@ -111,7 +112,7 @@ fun MyCard(movie: Movie) {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/original${movie.posterPath}",
+                model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
                 contentDescription = movie.title,
                 modifier = Modifier.size(150.dp)
             )

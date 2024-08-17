@@ -1,5 +1,6 @@
 package com.munbonecci.movies.di
 
+import com.munbonecci.movies.data.api.ApiConstants
 import com.munbonecci.movies.data.api.MovieApi
 import dagger.Module
 import dagger.Provides
@@ -22,7 +23,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(ApiConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
