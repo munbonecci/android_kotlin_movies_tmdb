@@ -5,7 +5,7 @@ import com.munbonecci.movies.BuildConfig
 
 data class MoviesRequest(
     @SerializedName("api_key")
-    val apiKey: String = BuildConfig.API_KEY,
+    val apiKey: String = BuildConfig.apiKey,
     @SerializedName("include_adult")
     val includeAdult: Boolean = false,
     @SerializedName("include_video")

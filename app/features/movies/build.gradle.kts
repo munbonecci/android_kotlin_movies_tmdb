@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.secrets)
     id("kotlin-kapt")
     alias(libs.plugins.hilt.android.plugin)
 }
