@@ -26,11 +26,14 @@ including use cases and view model to obtain the data
 ## Built with
 
 - [Kotlin](https://kotlinlang.org/) - For coding.
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) -For dependency injection.
 - [SecretsGradlePlugin](https://github.com/google/secrets-gradle-plugin) - For providing your secrets securely to your Android project.
-- [TheMoviewDB](https://www.themoviedb.org) - Movie Api.
+- [TheMovieDB](https://www.themoviedb.org) - Movie database Api.
 - Jetpack
     - [Compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAiAzKqdBhAnEiwAePEjkkbfP8b_r6c57F3jtdwOjxWpBbNOXVmpSnAUu4HKCid7KtSvfiiYeRoC1wYQAvD_BwE&gclsrc=aw.ds)
         - Android’s recommended modern toolkit for building native UI.
+    - [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
+      - Handling and manage the navigation in the app.
 
 ## How I run the app?
 
