@@ -90,3 +90,5 @@ X
 Mapp/features/movies/src/main/java/com/munbonecci/movies/data/api/Constants.kt,8\4\849dc58b372791fb118c49195a62bdf11902bc2a
 Ä
 Papp/features/movies/src/main/java/com/munbonecci/movies/data/api/ApiConstants.kt,1\9\199a9fab6cfcae5661096c5357281646f33f19f7
+ê
+`app/features/movies/src/main/java/com/munbonecci/movies/presentation/screen/MovieDetailScreen.kt,2\a\2ab28ce8fb6f985e83e1030c55cf56aa6b5715fd
