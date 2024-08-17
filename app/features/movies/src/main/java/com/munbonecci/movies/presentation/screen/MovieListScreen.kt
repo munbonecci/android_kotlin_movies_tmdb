@@ -37,18 +37,23 @@ import com.munbonecci.movies.presentation.MoviesUiState
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
 
 @Composable
-fun MovieListScreen() {
-    val viewModel: MoviesViewModel = viewModel()
-    viewModel.getMostPopularMovies(MoviesRequest())
-    viewModel.getNowPlayingMovies(MoviesRequest())
-    val uiState by viewModel.uiStateForGetMostPopularMovies.collectAsState()
-    val uiStateForNowPlayingMovies by viewModel.uiStateForNowPlayingMovies.collectAsState()
-    var lista = remember { mutableListOf<Movie>() }
+fun MovieListScreen(viewModel: MoviesViewModel = viewModel(), isMostPopular: Boolean = true) {
+
+    if (isMostPopular) {
+        viewModel.getMostPopularMovies(MoviesRequest())
+    } else {
+        viewModel.getNowPlayingMovies(MoviesRequest())
+    }
+
+    val uiState by viewModel.uiStateForMovies.collectAsState()
+
+    var movies = remember { mutableListOf<Movie>() }
     var showGrid by remember { mutableStateOf(false) }
 
     when (uiState) {
         is MoviesUiState.Loading -> {}
-        is MoviesUiState.Success -> {lista = (uiState as MoviesUiState.Success).movies.toMutableList()
+        is MoviesUiState.Success -> {
+            movies = (uiState as MoviesUiState.Success).movies.toMutableList()
         }
         is MoviesUiState.Error -> (uiState as MoviesUiState.Error).message
     }
@@ -62,9 +67,9 @@ fun MovieListScreen() {
         }
 
         if (showGrid) {
-            LazyStaggeredGridSnippet(items = lista)
+            LazyStaggeredGridSnippet(items = movies)
         } else {
-            ListItem(items = lista )
+            ListItem(items = movies)
         }
     }
 }

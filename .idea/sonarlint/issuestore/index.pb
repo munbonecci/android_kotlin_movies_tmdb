@@ -58,3 +58,7 @@ F
 app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
 m
 =app/src/main/java/com/munbonecci/moviestmdb/ui/theme/Color.kt,6\f\6f4fa671fbe820bef8547fc56474d72a9b208864
+‘
+aapp/features/movies/src/main/java/com/munbonecci/movies/presentation/viewmodel/MoviesViewModel.kt,9\b\9b7b63254dd44cc963c95338f95587643a5ee172
+‘
+aapp/features/movies/src/main/java/com/munbonecci/movies/data/repositories/MoviesRepositoryImpl.kt,7\e\7edb3192653806e8477c1953466c2307e025574b
