@@ -43,3 +43,8 @@ including use cases and view model to obtain the data
 - Wait until dependencies are installed (Change you JDK to Corretto if necessary to avoid sync problems)
 - Add your keys in local properties (apiKey="YOUR_API_KEY")
 - Run app in your emulator or physical device
+
+![App Screens](app/app-image.png)
+![App Screens](app/app-image2.png)
+![App Screens](app/app-image3.png)
+![App Screens](app/app-image4.png)
