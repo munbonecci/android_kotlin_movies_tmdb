@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -31,6 +32,7 @@ import coil.compose.AsyncImage
 import com.munbonecci.movies.R
 import com.munbonecci.movies.data.api.ApiConstants
 import com.munbonecci.movies.domain.models.Movie
+import com.munbonecci.movies.presentation.MoviesUiState
 import com.munbonecci.movies.presentation.MoviesUiState.Error
 import com.munbonecci.movies.presentation.MoviesUiState.Loading
 import com.munbonecci.movies.presentation.MoviesUiState.Success
@@ -44,21 +46,104 @@ fun MovieDetailsScreen(
     movieId: Int?,
     saveMovieViewModel: SaveMovieViewModel
 ) {
+    DetailScreen(paddingValues, saveMovieViewModel, movieId, viewModel)
+}
+
+@Composable
+private fun DetailScreen(
+    paddingValues: PaddingValues,
+    saveMovieViewModel: SaveMovieViewModel,
+    movieId: Int?,
+    viewModel: MoviesViewModel
+) {
     val uiState by viewModel.uiStateForMovies.collectAsState()
-    val saveMovieUiState = saveMovieViewModel.saveMovieState
+    var movie: Movie? = Movie()
+    movie = movie(uiState, movie, movieId)
     val isFavorite = remember { mutableStateOf(false) }
-    var movie = Movie()
+
+    if (movie == null) {
+        saveMovieViewModel.getMovieById(movieId ?: 0)
+        val savedMovie by saveMovieViewModel.saveMovieByIdState.collectAsState()
+        movie = savedMovie.movie
+        isFavorite.value = true
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                movie?.let {
+                    Poster(movie)
+
+                    IconButton(onClick = {
+                        isFavorite.value = !isFavorite.value
+                        if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
+                        else saveMovieViewModel.deleteMovie(movie)
+                    }) {
+                        Icon(
+                            if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = "Favorite",
+                            modifier = Modifier.size(24.dp),
+                            tint = if (isFavorite.value) Color.Red else Color.Gray
+                        )
+                    }
+
+                    DetailInfo(movie)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun movie(
+    uiState: MoviesUiState,
+    movie: Movie?,
+    movieId: Int?
+): Movie? {
+    var movie1 = movie
     when (uiState) {
         is Loading -> {}
         is Success -> {
-            movie = (uiState as Success).movies.toMutableList().find {
+            movie1 = uiState.movies.toMutableList().find {
                 it.id == movieId
-            }!!
+            }
         }
 
-        is Error -> (uiState as Error).message
+        is Error -> uiState.message
     }
+    return movie1
+}
 
+@Composable
+fun Poster(movie: Movie) {
+    Card(
+        elevation = 4.dp,
+        border = BorderStroke(1.dp, Color.Transparent),
+    ) {
+        AsyncImage(
+            model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
+            contentDescription = movie.title,
+            modifier = Modifier
+                .size(250.dp),
+            contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+@Composable
+fun DetailInfo(movie: Movie) {
     val genre = stringResource(id = R.string.genre)
     val overview = stringResource(id = R.string.overview)
     val popularity = stringResource(id = R.string.popularity)
@@ -67,74 +152,40 @@ fun MovieDetailsScreen(
     val voteAverage = stringResource(id = R.string.vote_average)
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.padding(16.dp)
     ) {
-        Card(
-            elevation = 4.dp,
-            border = BorderStroke(1.dp, Color.Transparent),
-        ) {
-            AsyncImage(
-                model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
-                contentDescription = movie.title,
-                modifier = Modifier
-                    .size(250.dp),
-                contentScale = ContentScale.FillBounds
-            )
-        }
-
-        IconButton(onClick = {
-            isFavorite.value = !isFavorite.value
-            if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
-            else saveMovieViewModel.deleteMovie(movie)
-        }) {
-            Icon(
-                if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                contentDescription = "Favorite",
-                modifier = Modifier.size(24.dp),
-                tint = if (isFavorite.value) Color.Red else Color.Gray
-            )
-        }
-
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(4.dp),
-                text = movie.title ?: "",
-                style = MaterialTheme.typography.h5,
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = "$overview: ${movie.overview}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$popularity: ${movie.popularity}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$releaseDate: ${movie.releaseDate}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$languages: ${movie.originalLanguage}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$voteAverage: ${movie.voteAverage}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$genre: ${movie.genreIds}",
-                modifier = Modifier.padding(4.dp),
-                textAlign = TextAlign.Justify
-            )
-        }
+        Text(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(4.dp),
+            text = movie.title ?: "",
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = "$overview: ${movie.overview}",
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "$popularity: ${movie.popularity}",
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "$releaseDate: ${movie.releaseDate}",
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "$languages: ${movie.originalLanguage}",
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "$voteAverage: ${movie.voteAverage}",
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "$genre: ${movie.genreIds}",
+            modifier = Modifier.padding(4.dp),
+            textAlign = TextAlign.Justify
+        )
     }
 }
