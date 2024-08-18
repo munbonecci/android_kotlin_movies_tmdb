@@ -18,7 +18,7 @@ class GetAllSavedMoviesUseCase @Inject constructor(
         this.map { movie ->
             movies.add(
                 Movie(
-                    id = movie.id,
+                    id = movie.movieId,
                     title = movie.title,
                     overview = movie.overview,
                     posterPath = movie.posterPath,

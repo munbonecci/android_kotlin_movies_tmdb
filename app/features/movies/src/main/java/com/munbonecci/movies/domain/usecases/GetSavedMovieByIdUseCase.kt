@@ -14,7 +14,7 @@ class GetSavedMovieByIdUseCase @Inject constructor(
 
     private fun MovieEntity.toMovie(): Movie {
         return Movie(
-            id = this.id,
+            id = this.movieId,
             title = this.title,
             overview = this.overview,
             posterPath = this.posterPath,

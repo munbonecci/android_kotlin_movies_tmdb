@@ -52,10 +52,11 @@ fun MovieDetailsScreen(
     var movie: Movie? = Movie()
     movie = movie(uiState, movie, movieId)
 
-    if (movie == null){
+    if (movie == null) {
         saveMovieViewModel.getMovieById(movieId ?: 0)
         val savedMovie by saveMovieViewModel.saveMovieByIdState.collectAsState()
-        movie =savedMovie.movie
+        movie = savedMovie.movie
+        isFavorite.value = true
     }
 
     DetailScreen(paddingValues, movie, isFavorite, saveMovieViewModel)
@@ -120,6 +121,7 @@ private fun movie(
                 it.id == movieId
             }
         }
+
         is Error -> uiState.message
     }
     return movie1

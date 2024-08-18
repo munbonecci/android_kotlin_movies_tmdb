@@ -14,7 +14,7 @@ class SaveMovieUseCase @Inject constructor(
     }
 
     private fun Movie.toMovieEntity(): MovieEntity {
-        val movie = MovieEntity(id = this.id ?: 0,
+        val movie = MovieEntity(movieId = this.id ?: 0,
             title = this.title,
             overview = this.overview,
             posterPath = this.posterPath,
