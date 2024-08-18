@@ -8,27 +8,45 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.munbonecci.movies.R
 import com.munbonecci.movies.data.api.ApiConstants
 import com.munbonecci.movies.domain.models.Movie
 import com.munbonecci.movies.presentation.MoviesUiState.Error
 import com.munbonecci.movies.presentation.MoviesUiState.Loading
 import com.munbonecci.movies.presentation.MoviesUiState.Success
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
+import com.munbonecci.movies.presentation.viewmodel.SaveMovieViewModel
 
 @Composable
-fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel, movieId: Int?) {
+fun MovieDetailsScreen(
+    paddingValues: PaddingValues,
+    viewModel: MoviesViewModel,
+    movieId: Int?,
+    saveMovieViewModel: SaveMovieViewModel
+) {
     val uiState by viewModel.uiStateForMovies.collectAsState()
+    val saveMovieUiState = saveMovieViewModel.saveMovieState
+    val isFavorite = remember { mutableStateOf(false) }
     var movie = Movie()
     when (uiState) {
         is Loading -> {}
@@ -40,6 +58,13 @@ fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel,
 
         is Error -> (uiState as Error).message
     }
+
+    val genre = stringResource(id = R.string.genre)
+    val overview = stringResource(id = R.string.overview)
+    val popularity = stringResource(id = R.string.popularity)
+    val releaseDate = stringResource(id = R.string.release_date)
+    val languages = stringResource(id = R.string.languages)
+    val voteAverage = stringResource(id = R.string.vote_average)
 
     Column(
         modifier = Modifier
@@ -61,16 +86,55 @@ fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel,
             )
         }
 
+        IconButton(onClick = {
+            isFavorite.value = !isFavorite.value
+            if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
+            else saveMovieViewModel.deleteMovie(movie)
+        }) {
+            Icon(
+                if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = "Favorite",
+                modifier = Modifier.size(24.dp),
+                tint = if (isFavorite.value) Color.Red else Color.Gray
+            )
+        }
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = movie.title ?: "", style = MaterialTheme.typography.h5)
-            Text(text = "Géneros: ${movie.genreIds.joinToString(", ")}")
-            Text(text = "Sinopsis: ${movie.overview}")
-            Text(text = "Popularidad: ${movie.popularity}")
-            Text(text = "Fecha de estreno: ${movie.releaseDate}")
-            Text(text = "Idiomas: ${movie.originalLanguage}")
-            Text(text = "Puntuación: ${movie.voteAverage}")
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(4.dp),
+                text = movie.title ?: "",
+                style = MaterialTheme.typography.h5,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "$overview: ${movie.overview}",
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = "$popularity: ${movie.popularity}",
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = "$releaseDate: ${movie.releaseDate}",
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = "$languages: ${movie.originalLanguage}",
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = "$voteAverage: ${movie.voteAverage}",
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = "$genre: ${movie.genreIds}",
+                modifier = Modifier.padding(4.dp),
+                textAlign = TextAlign.Justify
+            )
         }
     }
 }

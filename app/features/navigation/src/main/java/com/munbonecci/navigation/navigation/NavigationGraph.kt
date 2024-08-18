@@ -12,10 +12,12 @@ import androidx.navigation.navArgument
 import com.munbonecci.movies.presentation.screen.MovieDetailsScreen
 import com.munbonecci.movies.presentation.screen.MovieListScreen
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
+import com.munbonecci.movies.presentation.viewmodel.SaveMovieViewModel
 
 @Composable
 fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValues) {
     val viewModel: MoviesViewModel = viewModel()
+    val saveMovieViewModel: SaveMovieViewModel = viewModel()
     NavHost(navController, startDestination = NavigationItem.Popular.route) {
 
         composable(NavigationItem.Popular.route) {
@@ -40,7 +42,7 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
             )
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getInt("id", 0)
-            MovieDetailsScreen(paddingValues, viewModel, movieId)
+            MovieDetailsScreen(paddingValues, viewModel, movieId, saveMovieViewModel)
         }
     }
 }

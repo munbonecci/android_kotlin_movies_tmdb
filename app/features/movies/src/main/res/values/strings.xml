@@ -3,4 +3,11 @@
     <string name="grid_list_button">Grid/List</string>
     <string name="see_list">See List</string>
     <string name="see_grid">See Grid</string>
+    <string name="genre">Genre</string>
+    <string name="overview">Overview</string>
+    <string name="popularity">Popularity</string>
+    <string name="release_date">Release date</string>
+    <string name="languages">Languages</string>
+    <string name="vote_average">Vote average</string>
+    <string name="status">Status</string>
 </resources>

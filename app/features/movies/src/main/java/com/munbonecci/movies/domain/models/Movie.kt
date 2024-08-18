@@ -7,7 +7,7 @@ data class Movie(
     @SerializedName("backdrop_path")
     var backdropPath: String? = null,
     @SerializedName("genre_ids")
-    var genreIds: ArrayList<Int> = arrayListOf(),
+    var genreIds: List<Int> = arrayListOf(),
     var id: Int? = null,
     @SerializedName("original_language") var originalLanguage: String? = null,
     @SerializedName("original_title") var originalTitle: String? = null,
