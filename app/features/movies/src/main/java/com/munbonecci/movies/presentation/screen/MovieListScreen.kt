@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -23,11 +24,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -43,6 +47,7 @@ import com.munbonecci.movies.data.models.MoviesRequest
 import com.munbonecci.movies.domain.models.Movie
 import com.munbonecci.movies.presentation.MoviesUiState
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun MovieListScreen(
@@ -100,7 +105,7 @@ fun MovieListScreen(
 
         ShowGridOrListScreen(showGrid, movies, onOptionPressed = {
             onOptionPressed(it)
-        } )
+        }, viewModel)
     }
 }
 
@@ -108,7 +113,8 @@ fun MovieListScreen(
 private fun ShowGridOrListScreen(
     showGrid: Boolean,
     movies: List<Movie>,
-    onOptionPressed: (Movie) -> Unit
+    onOptionPressed: (Movie) -> Unit,
+    viewModel: MoviesViewModel
 ) {
     if (showGrid) {
         LazyStaggeredGridSnippet(items = movies, onOptionPressed = {
@@ -117,7 +123,7 @@ private fun ShowGridOrListScreen(
     } else {
         ListItem(items = movies, onOptionPressed = {
             onOptionPressed(it)
-        })
+        }, viewModel)
     }
 }
 
@@ -147,11 +153,23 @@ fun LazyStaggeredGridSnippet(items: List<Movie>, onOptionPressed: (Movie) -> Uni
 }
 
 @Composable
-fun ListItem(items: List<Movie>, onOptionPressed: (Movie) -> Unit) {
-    LazyColumn {
+fun ListItem(items: List<Movie>, onOptionPressed: (Movie) -> Unit, viewModel: MoviesViewModel) {
+    val listState = rememberLazyListState()
+    var currentPage by remember { mutableIntStateOf(1) }
+
+    LazyColumn(state = listState) {
         items(items) { item ->
             ContainerForListCard(item, onOptionPressed)
         }
+    }
+
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull() }
+            .collectLatest { lastVisibleItem ->
+                if (lastVisibleItem != null && lastVisibleItem.index == listState.layoutInfo.totalItemsCount - 1) {
+                    viewModel.getMostPopularMovies(MoviesRequest(page = currentPage++))
+                }
+            }
     }
 }
 
