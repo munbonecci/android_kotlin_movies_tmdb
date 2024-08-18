@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.munbonecci.favorites.presentation.FavoritesScreen
 import com.munbonecci.movies.presentation.screen.MovieDetailsScreen
 import com.munbonecci.movies.presentation.screen.MovieListScreen
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
@@ -27,11 +28,13 @@ fun NavigationGraph(navController: NavHostController, paddingValues: PaddingValu
         }
         composable(NavigationItem.NowPlaying.route) {
             MovieListScreen(viewModel, false, paddingValues, onOptionPressed = {
-                navController.navigate(NavigationItem.MovieDetails.route)
+                navController.navigate("${NavigationItem.MovieDetails.route}/${it.id}")
             })
         }
         composable(NavigationItem.Favorites.route) {
-            MovieScreen()
+            FavoritesScreen(saveMovieViewModel, paddingValues, onOptionPressed = {
+                navController.navigate("${NavigationItem.MovieDetails.route}/${it.id}")
+            })
         }
         composable(NavigationItem.Settings.route) {
             MovieScreen()

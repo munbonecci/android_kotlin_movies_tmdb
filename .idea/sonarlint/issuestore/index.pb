@@ -130,3 +130,7 @@ Y
 )app/features/favorites/consumer-rules.pro,6\4\64976ecb262322196c1280976369ca4f139d4dae
 Ä
 Papp/features/favorites/src/test/java/com/munbonecci/favorites/ExampleUnitTest.kt,2\1\21415143890cf1263e8384572fa02c9f1d0ab746
+ç
+]app/features/favorites/src/main/java/com/munbonecci/favorites/presentation/FavoritesScreen.kt,e\c\ec2b5b0ef615b6dc1cdca46a6229b4bf8530473c
+ì
+capp/features/movies/src/main/java/com/munbonecci/movies/domain/usecases/GetSavedMovieByIdUseCase.kt,9\d\9ddfd0911e61eefc17fa7f7e7a530023bd80b1c8
