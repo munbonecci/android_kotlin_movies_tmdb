@@ -7,14 +7,13 @@ plugins {
 }
 
 android {
-    namespace = "com.munbonecci.navigation"
+    namespace = "com.munbonecci.favorites"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-
+        targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
     buildFeatures {
         buildConfig = true
@@ -42,6 +41,11 @@ android {
     hilt {
         enableAggregatingTask = true
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
@@ -55,17 +59,28 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation (libs.androidx.material)
+    implementation(libs.material)
     implementation(project(":app:features:movies"))
-    implementation(project(":app:features:favorites"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Navigation
-    implementation (libs.androidx.navigation.compose)
-    implementation (libs.androidx.material)
-    implementation (libs.androidx.hilt.navigation.compose)
-// Dagger Hilt
+    //retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    //okhttp
+    implementation (libs.okhttp)
+    //Gson
+    implementation (libs.gson)
+    // Dagger Hilt
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
-
+    //coil
+    implementation (libs.coil.kt.coil.compose)
+    //Navigation
+    implementation (libs.androidx.navigation.compose)
+    //Room
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
+    implementation (libs.androidx.room.ktx)
 }

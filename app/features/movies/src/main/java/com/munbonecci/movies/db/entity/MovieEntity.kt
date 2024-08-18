@@ -10,7 +10,6 @@ import com.munbonecci.movies.db.converter.GenreIdsConverter
 data class MovieEntity(
     @PrimaryKey(autoGenerate = true)
     var movieId: Int = 0,
-    var id: Int,
     var adult: Boolean? = null,
     var backdropPath: String? = null,
     var genreIds: List<Int> = emptyList(),

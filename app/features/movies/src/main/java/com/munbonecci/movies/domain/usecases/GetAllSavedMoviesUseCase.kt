@@ -3,15 +3,14 @@ package com.munbonecci.movies.domain.usecases
 import com.munbonecci.movies.db.dao.MovieDao
 import com.munbonecci.movies.db.entity.MovieEntity
 import com.munbonecci.movies.domain.models.Movie
-import kotlinx.coroutines.flow.single
 import javax.inject.Inject
 
 class GetAllSavedMoviesUseCase @Inject constructor(
     private val movieDao: MovieDao
 ) {
     suspend operator fun invoke(): List<Movie> {
-        val movies = movieDao.getAllMovies().single()
-        return movies.toMovie()
+        val movies = movieDao.getAllMovies().toMovie()
+        return movies
     }
 
     private fun List<MovieEntity>.toMovie(): List<Movie> {
@@ -19,7 +18,7 @@ class GetAllSavedMoviesUseCase @Inject constructor(
         this.map { movie ->
             movies.add(
                 Movie(
-                    id = movie.id,
+                    id = movie.movieId,
                     title = movie.title,
                     overview = movie.overview,
                     posterPath = movie.posterPath,

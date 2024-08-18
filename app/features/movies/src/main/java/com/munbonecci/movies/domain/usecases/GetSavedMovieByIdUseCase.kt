@@ -1,20 +1,20 @@
 package com.munbonecci.movies.domain.usecases
-
 import com.munbonecci.movies.db.dao.MovieDao
 import com.munbonecci.movies.db.entity.MovieEntity
 import com.munbonecci.movies.domain.models.Movie
 import javax.inject.Inject
 
-class SaveMovieUseCase @Inject constructor(
+class GetSavedMovieByIdUseCase @Inject constructor(
     private val movieDao: MovieDao
 ) {
-    suspend operator fun invoke(movie: Movie): Boolean {
-        movieDao.insert(movie.toMovieEntity())
-        return true
+    suspend operator fun invoke(id: Int): Movie {
+        val movie = movieDao.getMovieById(id).toMovie()
+        return movie
     }
 
-    private fun Movie.toMovieEntity(): MovieEntity {
-        val movie = MovieEntity(movieId = this.id ?: 0,
+    private fun MovieEntity.toMovie(): Movie {
+        return Movie(
+            id = this.movieId,
             title = this.title,
             overview = this.overview,
             posterPath = this.posterPath,
@@ -26,8 +26,7 @@ class SaveMovieUseCase @Inject constructor(
             voteAverage = this.voteAverage,
             voteCount = this.voteCount,
             adult = this.adult,
-            genreIds = this.genreIds
+            genreIds = this.genreIds,
         )
-        return movie
     }
 }
