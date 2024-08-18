@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -45,7 +46,6 @@ fun MovieDetailsScreen(
     saveMovieViewModel: SaveMovieViewModel
 ) {
     val uiState by viewModel.uiStateForMovies.collectAsState()
-    val saveMovieUiState = saveMovieViewModel.saveMovieState
     val isFavorite = remember { mutableStateOf(false) }
     var movie = Movie()
     when (uiState) {
@@ -66,75 +66,85 @@ fun MovieDetailsScreen(
     val languages = stringResource(id = R.string.languages)
     val voteAverage = stringResource(id = R.string.vote_average)
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(
-            elevation = 4.dp,
-            border = BorderStroke(1.dp, Color.Transparent),
-        ) {
-            AsyncImage(
-                model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
-                contentDescription = movie.title,
+        item {
+            Column(
                 modifier = Modifier
-                    .size(250.dp),
-                contentScale = ContentScale.FillBounds
-            )
-        }
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Card(
+                    elevation = 4.dp,
+                    border = BorderStroke(1.dp, Color.Transparent),
+                ) {
+                    AsyncImage(
+                        model = "${ApiConstants.POSTER_URL}${movie.posterPath}",
+                        contentDescription = movie.title,
+                        modifier = Modifier
+                            .size(250.dp),
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
 
-        IconButton(onClick = {
-            isFavorite.value = !isFavorite.value
-            if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
-            else saveMovieViewModel.deleteMovie(movie)
-        }) {
-            Icon(
-                if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                contentDescription = "Favorite",
-                modifier = Modifier.size(24.dp),
-                tint = if (isFavorite.value) Color.Red else Color.Gray
-            )
-        }
+                IconButton(onClick = {
+                    isFavorite.value = !isFavorite.value
+                    if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
+                    else saveMovieViewModel.deleteMovie(movie)
+                }) {
+                    Icon(
+                        if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        modifier = Modifier.size(24.dp),
+                        tint = if (isFavorite.value) Color.Red else Color.Gray
+                    )
+                }
 
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(4.dp),
-                text = movie.title ?: "",
-                style = MaterialTheme.typography.h5,
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = "$overview: ${movie.overview}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$popularity: ${movie.popularity}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$releaseDate: ${movie.releaseDate}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$languages: ${movie.originalLanguage}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$voteAverage: ${movie.voteAverage}",
-                modifier = Modifier.padding(4.dp)
-            )
-            Text(
-                text = "$genre: ${movie.genreIds}",
-                modifier = Modifier.padding(4.dp),
-                textAlign = TextAlign.Justify
-            )
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(4.dp),
+                        text = movie.title ?: "",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = "$overview: ${movie.overview}",
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    Text(
+                        text = "$popularity: ${movie.popularity}",
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    Text(
+                        text = "$releaseDate: ${movie.releaseDate}",
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    Text(
+                        text = "$languages: ${movie.originalLanguage}",
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    Text(
+                        text = "$voteAverage: ${movie.voteAverage}",
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    Text(
+                        text = "$genre: ${movie.genreIds}",
+                        modifier = Modifier.padding(4.dp),
+                        textAlign = TextAlign.Justify
+                    )
+                }
+            }
         }
     }
 }
