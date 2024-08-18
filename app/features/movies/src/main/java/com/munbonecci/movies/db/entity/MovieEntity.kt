@@ -9,7 +9,7 @@ import com.munbonecci.movies.db.converter.GenreIdsConverter
 @TypeConverters(GenreIdsConverter::class)
 data class MovieEntity(
     @PrimaryKey(autoGenerate = true)
-    var movieId: Int,
+    var movieId: Int = 0,
     var id: Int,
     var adult: Boolean? = null,
     var backdropPath: String? = null,

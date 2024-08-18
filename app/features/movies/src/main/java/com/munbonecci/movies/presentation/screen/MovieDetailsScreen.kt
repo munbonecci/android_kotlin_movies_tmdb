@@ -35,10 +35,17 @@ import com.munbonecci.movies.presentation.MoviesUiState.Error
 import com.munbonecci.movies.presentation.MoviesUiState.Loading
 import com.munbonecci.movies.presentation.MoviesUiState.Success
 import com.munbonecci.movies.presentation.viewmodel.MoviesViewModel
+import com.munbonecci.movies.presentation.viewmodel.SaveMovieViewModel
 
 @Composable
-fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel, movieId: Int?) {
+fun MovieDetailsScreen(
+    paddingValues: PaddingValues,
+    viewModel: MoviesViewModel,
+    movieId: Int?,
+    saveMovieViewModel: SaveMovieViewModel
+) {
     val uiState by viewModel.uiStateForMovies.collectAsState()
+    val saveMovieUiState = saveMovieViewModel.saveMovieState
     val isFavorite = remember { mutableStateOf(false) }
     var movie = Movie()
     when (uiState) {
@@ -81,6 +88,8 @@ fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel,
 
         IconButton(onClick = {
             isFavorite.value = !isFavorite.value
+            if (isFavorite.value) saveMovieViewModel.saveMovie(movie)
+            else saveMovieViewModel.deleteMovie(movie)
         }) {
             Icon(
                 if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
@@ -123,9 +132,7 @@ fun MovieDetailsScreen(paddingValues: PaddingValues, viewModel: MoviesViewModel,
             )
             Text(
                 text = "$genre: ${movie.genreIds}",
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(4.dp),
+                modifier = Modifier.padding(4.dp),
                 textAlign = TextAlign.Justify
             )
         }
