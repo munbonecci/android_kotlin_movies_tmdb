@@ -46,26 +46,27 @@ fun MovieDetailsScreen(
     movieId: Int?,
     saveMovieViewModel: SaveMovieViewModel
 ) {
-    val uiState by viewModel.uiStateForMovies.collectAsState()
-    var movie: Movie? = Movie()
-    movie = movie(uiState, movie, movieId)
-
-    if (movie == null) {
-        saveMovieViewModel.getMovieById(movieId ?: 0)
-        val savedMovie by saveMovieViewModel.saveMovieByIdState.collectAsState()
-        movie = savedMovie.movie
-    }
-
-    DetailScreen(paddingValues, movie, saveMovieViewModel)
+    DetailScreen(paddingValues, saveMovieViewModel, movieId, viewModel)
 }
 
 @Composable
 private fun DetailScreen(
     paddingValues: PaddingValues,
-    movie: Movie?,
-    saveMovieViewModel: SaveMovieViewModel
+    saveMovieViewModel: SaveMovieViewModel,
+    movieId: Int?,
+    viewModel: MoviesViewModel
 ) {
+    val uiState by viewModel.uiStateForMovies.collectAsState()
+    var movie: Movie? = Movie()
+    movie = movie(uiState, movie, movieId)
     val isFavorite = remember { mutableStateOf(false) }
+
+    if (movie == null) {
+        saveMovieViewModel.getMovieById(movieId ?: 0)
+        val savedMovie by saveMovieViewModel.saveMovieByIdState.collectAsState()
+        movie = savedMovie.movie
+        isFavorite.value = true
+    }
 
     LazyColumn(
         modifier = Modifier
