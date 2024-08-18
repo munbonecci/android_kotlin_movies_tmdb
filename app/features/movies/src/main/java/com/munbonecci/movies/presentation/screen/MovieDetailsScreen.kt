@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,7 +47,6 @@ fun MovieDetailsScreen(
     saveMovieViewModel: SaveMovieViewModel
 ) {
     val uiState by viewModel.uiStateForMovies.collectAsState()
-    val isFavorite = remember { mutableStateOf(false) }
     var movie: Movie? = Movie()
     movie = movie(uiState, movie, movieId)
 
@@ -56,19 +54,19 @@ fun MovieDetailsScreen(
         saveMovieViewModel.getMovieById(movieId ?: 0)
         val savedMovie by saveMovieViewModel.saveMovieByIdState.collectAsState()
         movie = savedMovie.movie
-        isFavorite.value = true
     }
 
-    DetailScreen(paddingValues, movie, isFavorite, saveMovieViewModel)
+    DetailScreen(paddingValues, movie, saveMovieViewModel)
 }
 
 @Composable
 private fun DetailScreen(
     paddingValues: PaddingValues,
     movie: Movie?,
-    isFavorite: MutableState<Boolean>,
     saveMovieViewModel: SaveMovieViewModel
 ) {
+    val isFavorite = remember { mutableStateOf(false) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
